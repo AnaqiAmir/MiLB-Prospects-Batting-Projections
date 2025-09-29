@@ -80,7 +80,7 @@ Trying to predict how a player will perform once they get to the big leagues has
 
 - Since StatCast does not provide player wRAA and wRC statistics, I calculated them using available data instead. I also calculated wOBA using its components to get a more precise calculation for wRAA and wRC since StatCast provided wOBA only goes up to 3 decimal points, limiting precision.
 - Formulas:
-  - `wOBA` = $$\frac{(wBB*uBB)+(wHBP*HBP)+(w1B*1B)+(w2B*2B)+(w3B*3B)+(wHR*HR)}{AB+BB-IBB+SF+HBP}$$
+  - `wOBA` = $$\frac{(wBB \times uBB)+(wHBP \times HBP)+(w1B \times 1B)+(w2B \times 2B)+(w3B*3B)+(wHR \times HR)}{AB+BB-IBB+SF+HBP}$$
   - `wRAA` = $$(\frac{wOBA - lgwOBA}{wOBAScale})* PA$$
   - `wRC` =  $$(\frac{wOBA - lgwOBA}{wOBAScale} + \frac{lgRun}{PA}) * PA$$
   - <u>Note</u>: All weights can be found in `fixed-values-initialization.ipynb`.
@@ -89,9 +89,17 @@ Trying to predict how a player will perform once they get to the big leagues has
 
 - While a player's minor league data is sorted by their names and individual years, our target variables will be based on their career stats i.e. their career wOBA, and aggregate wRAA and wRC across their time in the  MLB. The reason for this is because organizations do not want to predict how a minor league player would want to do in a singular MLB season but rather how much the player can contribute to the team as a whole across multiple years and their career.
 - Formulas:
-  - `Career wOBA` = $$\frac{\Sigma_{i=x}^{n}(wBB_i*uBB_i)+(wHBP_i*HBP_i)+(w1B_i*1B_i)+(w2B_i*2B_i)+(w3B_i*3B_i)+(wHR_i*HR_i)}{AB+BB-IBB+SF+HBP}$$ where $n, x \in \{2015,2025\}$. <br><br>In other words, calculate each year's numerator value based on the wOBA components weights and scale and then divide it by the player's career PA.<br>
-  - `Career wRAA` = $$\Sigma_{i=x}^{n}(\frac{wOBA_i - lgwOBA_i}{wOBAScale_i})* PA$$ where $n, x \in \{2015,2025\}$. <br><br> In other words, add a player's wRAA from each year to get their career wRAA.
-  - `Career wRC` = $$\Sigma_{i=x}^{n}(\frac{wOBA_i - lgwOBA_i}{wOBAScale_i} + \frac{lgRun_i}{PA}) * PA$$ where $n, x \in \{2015,2025\}$. <br><br> In other words, add a player's wRC from each year to get their career wRC.
+  - `Career wOBA` = $$\frac{\Sigma_{i=x}^{n}(wBB_i \times uBB_i)+(wHBP_i \times HBP_i)+(w1B_i \times 1B_i)+(w2B_i \times 2B_i)+(w3B_i \times 3B_i)+(wHR_i \times HR_i)}{AB+BB-IBB+SF+HBP}$$
+  <br> where $n, x \in \{2015,2025\}$.
+  <br><br>In other words, calculate each year's numerator value based on the wOBA components weights and scale and then divide it by the player's career PA.<br>
+
+  - `Career wRAA` = $$\Sigma_{i=x}^{n}(\frac{wOBA_i - lgwOBA_i}{wOBAScale_i})* PA$$
+  <br> where $n, x \in \{2015,2025\}$.
+  <br><br> In other words, add a player's wRAA from each year to get their career wRAA.
+
+  - `Career wRC` = $$\Sigma_{i=x}^{n}(\frac{wOBA_i - lgwOBA_i}{wOBAScale_i} + \frac{lgRun_i}{PA}) * PA$$
+  <br> where $n, x \in \{2015,2025\}$.
+  <br><br> In other words, add a player's wRC from each year to get their career wRC.
 
 
 ### 6) Map player IDs
